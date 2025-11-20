@@ -18,7 +18,7 @@ namespace FormularioPersonas.Repositorios
 
         public async Task<Personas?> ObtenerPorId(int id)
         {
-            return await context.Personas.FirstOrDefaultAsync(p => p.Id == id);
+            return await context.Personas.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<List<Personas>> ObtenerTodos()

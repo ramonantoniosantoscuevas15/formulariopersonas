@@ -8,8 +8,12 @@ namespace FormularioPersonas.Utilidades
     {
         public AutoMapperProfiles()
         {
+            //mapeando las personas
             CreateMap<CrearPersonaDTO, Personas>();
             CreateMap<Personas, PersonaDTO>();
+            //mapeando las dirreciones
+            CreateMap<CrearDirrecionDTO, Dirreciones>();
+            CreateMap<Dirreciones, DirrecionDTO>();
         }
     }
 }

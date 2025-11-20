@@ -29,6 +29,8 @@ builder.Services.AddOutputCache();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRepositorioPersonas, RepositoriosPersonas>();
+builder.Services.AddScoped<IRepositorioDirreciones, RepositorioDirreciones>();
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 //fin de area de los servicios
@@ -41,6 +43,7 @@ app.UseOutputCache();
 
 app.MapGet("/",[EnableCors(policyName:"libre")] () => "Hello World!");
 app.MapGroup("").MapPersonas();
+app.MapGroup("").MapDirreciones();
 //fin del area de los middleware
 app.Run();
 
