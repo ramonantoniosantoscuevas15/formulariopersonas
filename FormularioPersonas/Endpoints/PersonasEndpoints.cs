@@ -17,7 +17,7 @@ namespace FormularioPersonas.Endpoints
 
             group.MapGet("/Obtener persona por id/{id:int}", ObterpersonaPorId);
 
-            group.MapPost("/Agregar Personas", AgregarPerosna);
+            group.MapPost("/Agregar Personas", AgregarPersona);
 
             group.MapPut("/Actualizar Personas/{id:int}", ActualizarPersona);
 
@@ -43,7 +43,7 @@ namespace FormularioPersonas.Endpoints
 
         }
 
-        static async Task<Created<PersonaDTO>> AgregarPerosna(CrearPersonaDTO CrearpersonaDTO, IRepositorioPersonas repositorio, 
+        static async Task<Created<PersonaDTO>> AgregarPersona(CrearPersonaDTO CrearpersonaDTO, IRepositorioPersonas repositorio, 
             IOutputCacheStore outputCacheStore, IMapper mapper)
         {
             var personas = mapper.Map<Personas>(CrearpersonaDTO);
