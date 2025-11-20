@@ -15,6 +15,7 @@ namespace FormularioPersonas
         }
         public DbSet<Personas> Personas { get; set; }
         public DbSet<Dirreciones> Dirreciones {  get; set; }
+        public DbSet<Telefonos> Telefonos { get; set; } 
 
         protected AplicationDbContext()
         {
