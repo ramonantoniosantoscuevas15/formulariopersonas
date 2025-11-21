@@ -11,7 +11,7 @@ namespace FormularioPersonas.Repositorios
         {
             this.context = context;
         }
-        public async Task<Telefonos?>ObtenerPorId(int id)
+        public async  Task<Telefonos?>ObtenerPorId(int id)
         {
             return await context.Telefonos.AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
         }
