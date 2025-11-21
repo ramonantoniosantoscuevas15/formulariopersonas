@@ -17,6 +17,9 @@ namespace FormularioPersonas.Utilidades
             //mapeando los telefonos
             CreateMap<CrearTelefonosDTO, Telefonos>();
             CreateMap<Telefonos,TelefonoDTO>();
+            //mapeando los correos
+            CreateMap<CrearCorreosDTO, Correos>();
+            CreateMap<Correos,CorreoDTO>();
         }
     }
 }
