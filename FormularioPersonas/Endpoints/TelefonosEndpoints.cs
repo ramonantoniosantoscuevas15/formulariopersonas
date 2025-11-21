@@ -13,6 +13,8 @@ namespace FormularioPersonas.Endpoints
         {
             group.MapPost("/Agregar Telefono", AgregarTelefono);
             group.MapPut("/Actualizar Telefono/{id:int}", ActualizaTelefono);
+            group.MapDelete("/Borrar Telefonos/{id:int}", BorrarTelefono);
+            group.MapGet("/Obtener Telefonos", ObtenerTelefonos).CacheOutput(c => c.Expire(TimeSpan.FromSeconds(60)).Tag("telefonos-get"));
             return group;
         }
         static async Task<Created<TelefonoDTO>> AgregarTelefono (CrearTelefonosDTO crearTelefonosDTO,
@@ -34,11 +36,30 @@ namespace FormularioPersonas.Endpoints
                 return TypedResults.NotFound();
             }
             var telefonos = mapper.Map<Telefonos>(crearTelefonosDTO);
-            telefonos.Id = await repositorio.Crear(telefonos);
+            telefonos.Id = id;
             await repositorio.Actualizar(telefonos);
             await outputCacheStore.EvictByTagAsync("telefonos-get", default);
             return TypedResults.NoContent();
 
+        }
+        static async Task<Results<NoContent,NotFound>> BorrarTelefono (int id,IRepositorioTelefonos repositorio, 
+            IOutputCacheStore outputCacheStore)
+        {
+            var existe = await repositorio.Existe(id);
+            if (!existe)
+            {
+                return TypedResults.NotFound();
+            }
+            await repositorio.Borrar(id);
+            await outputCacheStore.EvictByTagAsync("telefonos-get", default);
+            return TypedResults.NoContent();
+        }
+
+        static async Task<Ok<List<TelefonoDTO>>> ObtenerTelefonos(IRepositorioTelefonos repositorio,IMapper mapper)
+        {
+            var telefonos = await repositorio.ObtenerTodos();
+            var telefonosDTO = mapper.Map<List<TelefonoDTO>>(telefonos);
+            return TypedResults.Ok(telefonosDTO);
         }
     }
 }

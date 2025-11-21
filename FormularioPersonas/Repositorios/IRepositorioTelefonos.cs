@@ -9,5 +9,6 @@ namespace FormularioPersonas.Repositorios
         Task Borrar(int id);
         Task<int> Crear(Telefonos telefonos);
         Task<bool> Existe(int id);
+        Task<List<Telefonos>> ObtenerTodos();
     }
 }

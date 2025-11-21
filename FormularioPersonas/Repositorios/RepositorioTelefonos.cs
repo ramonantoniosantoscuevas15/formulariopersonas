@@ -38,5 +38,9 @@ namespace FormularioPersonas.Repositorios
         {
             await context.Telefonos.Where(t => t.Id == id).ExecuteDeleteAsync();
         }
+        public async Task<List<Telefonos>> ObtenerTodos()
+        {
+            return await context.Telefonos.ToListAsync();
+        }
     }
 }
