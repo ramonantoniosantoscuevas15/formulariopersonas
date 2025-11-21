@@ -20,6 +20,9 @@ namespace FormularioPersonas.Utilidades
             //mapeando los correos
             CreateMap<CrearCorreosDTO, Correos>();
             CreateMap<Correos,CorreoDTO>();
+            //mapeando las categorias
+            CreateMap<CrearCategoriasDTO, Categoria>();
+            CreateMap<Categoria,CategoriaDTO>();
         }
     }
 }

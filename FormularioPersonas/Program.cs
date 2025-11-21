@@ -32,7 +32,7 @@ builder.Services.AddScoped<IRepositorioPersonas, RepositoriosPersonas>();
 builder.Services.AddScoped<IRepositorioDirreciones, RepositorioDirreciones>();
 builder.Services.AddScoped<IRepositorioTelefonos, RepositorioTelefonos>();
 builder.Services.AddScoped<IRepositorioCorreos, RepositorioCorreos>();
-
+builder.Services.AddScoped<IRepositorioCategorias, RepositorioCategorias>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -49,6 +49,7 @@ app.MapGroup("").MapPersonas();
 app.MapGroup("").MapDirreciones();
 app.MapGroup("").MapTelefonos();
 app.MapGroup("").MapCorreos();
+app.MapGroup("").MapCategorias();
 //fin del area de los middleware
 app.Run();
 
