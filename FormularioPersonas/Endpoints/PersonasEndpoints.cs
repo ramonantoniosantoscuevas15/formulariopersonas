@@ -17,6 +17,8 @@ namespace FormularioPersonas.Endpoints
 
             group.MapGet("/Obtener persona por id/{id:int}", ObterpersonaPorId);
 
+            group.MapGet("/Busqueda por nombre",BusquedaPorNombre);
+
             group.MapPost("/Agregar Personas", AgregarPersona);
 
             group.MapPut("/Actualizar Personas/{id:int}", ActualizarPersona);
@@ -24,9 +26,11 @@ namespace FormularioPersonas.Endpoints
             group.MapDelete("/Borrar Personas/{id:int}", BorrarPersona);
             return group;
         }
-        static async Task<Ok<List<PersonaDTO>>> ObtenerPersonas(IRepositorioPersonas repositorio, IMapper mapper)
+        static async Task<Ok<List<PersonaDTO>>> ObtenerPersonas(IRepositorioPersonas repositorio, IMapper mapper,
+            int pagina =1, int recordsPorPagina = 10)
         {
-            var personas = await repositorio.ObtenerTodos();
+            var paginacion = new PaginacionDTO { Pagina = pagina , RecordsPorPagina = recordsPorPagina};
+            var personas = await repositorio.ObtenerTodos(paginacion);
             var personasDTO = mapper.Map<List<PersonaDTO>>(personas);
             return TypedResults.Ok(personasDTO);
         }
@@ -78,6 +82,13 @@ namespace FormularioPersonas.Endpoints
             await repositorio.Borrar(id);
             await outputCacheStore.EvictByTagAsync("personas-get", default);
             return TypedResults.NoContent();
+        }
+
+        static async Task<Ok<List<PersonaDTO>>> BusquedaPorNombre(string nombre, IRepositorioPersonas repositorioPersonas,IMapper mapper)
+        {
+            var persona = await repositorioPersonas.BusquedaPorNombre(nombre);
+            var personaDTO = mapper.Map<List<PersonaDTO>>(persona);
+            return TypedResults.Ok(personaDTO);
         }
 
     }

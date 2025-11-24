@@ -1,4 +1,6 @@
-﻿using FormularioPersonas.Entidades;
+﻿using FormularioPersonas.DTOs;
+using FormularioPersonas.Entidades;
+using FormularioPersonas.Utilidades;
 using Microsoft.EntityFrameworkCore;
 
 namespace FormularioPersonas.Repositorios
@@ -6,10 +8,12 @@ namespace FormularioPersonas.Repositorios
     public class RepositoriosPersonas : IRepositorioPersonas
     {
         private readonly AplicationDbContext context;
+        private readonly HttpContext httpContext;
 
-        public RepositoriosPersonas(AplicationDbContext context) 
+        public RepositoriosPersonas(AplicationDbContext context,IHttpContextAccessor httpContextAccessor) 
         {
             this.context = context;
+            httpContext = httpContextAccessor.HttpContext!;
         }
         public async Task<bool> Existe(int id)
         {
@@ -21,11 +25,13 @@ namespace FormularioPersonas.Repositorios
             return await context.Personas.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<List<Personas>> ObtenerTodos()
+        public async Task<List<Personas>> ObtenerTodos(PaginacionDTO paginacionDTO)
         {
             //orden de los nombres por apellido de forma decendente
             //return await context.Personas.OrderBy(p => p.Apellido).ToListAsync();
-            return await context.Personas.OrderByDescending(p => p.Apellido).ToListAsync();
+            var queryable = context.Personas.AsQueryable();
+            await httpContext.InsertarParametrosPaginacionEncabecera(queryable);
+            return await queryable.OrderByDescending(p => p.Apellido).Paginar(paginacionDTO).ToListAsync();
         }
 
         public async Task<int> Crear(Personas personas)
@@ -45,5 +51,13 @@ namespace FormularioPersonas.Repositorios
         {
             await context.Personas.Where(p => p.Id == id).ExecuteDeleteAsync();
         }
+
+        public async Task<List<Personas>> BusquedaPorNombre(string nombre)
+        {
+            return await context.Personas.Where(p => p.Nombre.Contains(nombre)).
+                OrderBy(p => p.Nombre).ToListAsync();
+        }
+
+        
     }
 }

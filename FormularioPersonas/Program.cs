@@ -35,6 +35,7 @@ builder.Services.AddScoped<IRepositorioCorreos, RepositorioCorreos>();
 builder.Services.AddScoped<IRepositorioCategorias, RepositorioCategorias>();
 
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddHttpContextAccessor();  
 
 //fin de area de los servicios
 var app = builder.Build();
