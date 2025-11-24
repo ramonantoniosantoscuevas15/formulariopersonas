@@ -12,9 +12,9 @@ namespace FormularioPersonas.Repositorios
             this.context = context;
         }
 
-        public async Task<List<Dirreciones>> ObtenerTodos()
+        public async Task<List<Dirreciones>> ObtenerTodos(int personaId)
         {
-            return await context.Dirreciones.OrderBy(d => d.Ciudad).ToListAsync();
+            return await context.Dirreciones.Where(d=> d.PersonaId == personaId).ToListAsync();
         }
 
         public async Task<Dirreciones?> ObtenerPorId(int id)

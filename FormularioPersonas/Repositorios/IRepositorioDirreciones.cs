@@ -9,6 +9,6 @@ namespace FormularioPersonas.Repositorios
         Task<int> Crear(Dirreciones dirreciones);
         Task<bool> Existe(int id);
         Task<Dirreciones?> ObtenerPorId(int id);
-        Task<List<Dirreciones>> ObtenerTodos();
+        Task<List<Dirreciones>> ObtenerTodos(int personaId);
     }
 }

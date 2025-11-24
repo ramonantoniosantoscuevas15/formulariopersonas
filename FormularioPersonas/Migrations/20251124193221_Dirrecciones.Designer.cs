@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FormularioPersonas.Migrations
 {
     [DbContext(typeof(AplicationDbContext))]
-    [Migration("20251120150911_Dirreciones")]
-    partial class Dirreciones
+    [Migration("20251124193221_Dirrecciones")]
+    partial class Dirrecciones
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,40 @@ namespace FormularioPersonas.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("FormularioPersonas.Entidades.Categoria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CategoriaTipo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categorias");
+                });
+
+            modelBuilder.Entity("FormularioPersonas.Entidades.Correos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Corrreo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Correos");
+                });
 
             modelBuilder.Entity("FormularioPersonas.Entidades.Dirreciones", b =>
                 {
@@ -47,6 +81,12 @@ namespace FormularioPersonas.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("PersonaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PersonasId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Provincia")
                         .IsRequired()
                         .HasColumnType("text");
@@ -56,6 +96,8 @@ namespace FormularioPersonas.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonasId");
 
                     b.ToTable("Dirreciones");
                 });
@@ -83,6 +125,42 @@ namespace FormularioPersonas.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Personas");
+                });
+
+            modelBuilder.Entity("FormularioPersonas.Entidades.Telefonos", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CodigoPais")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Telefonos");
+                });
+
+            modelBuilder.Entity("FormularioPersonas.Entidades.Dirreciones", b =>
+                {
+                    b.HasOne("FormularioPersonas.Entidades.Personas", null)
+                        .WithMany("Dirreciones")
+                        .HasForeignKey("PersonasId");
+                });
+
+            modelBuilder.Entity("FormularioPersonas.Entidades.Personas", b =>
+                {
+                    b.Navigation("Dirreciones");
                 });
 #pragma warning restore 612, 618
         }

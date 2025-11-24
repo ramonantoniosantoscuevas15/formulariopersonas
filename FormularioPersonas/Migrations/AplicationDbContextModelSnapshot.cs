@@ -78,6 +78,12 @@ namespace FormularioPersonas.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("PersonaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PersonasId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Provincia")
                         .IsRequired()
                         .HasColumnType("text");
@@ -87,6 +93,8 @@ namespace FormularioPersonas.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonasId");
 
                     b.ToTable("Dirreciones");
                 });
@@ -138,6 +146,18 @@ namespace FormularioPersonas.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Telefonos");
+                });
+
+            modelBuilder.Entity("FormularioPersonas.Entidades.Dirreciones", b =>
+                {
+                    b.HasOne("FormularioPersonas.Entidades.Personas", null)
+                        .WithMany("Dirreciones")
+                        .HasForeignKey("PersonasId");
+                });
+
+            modelBuilder.Entity("FormularioPersonas.Entidades.Personas", b =>
+                {
+                    b.Navigation("Dirreciones");
                 });
 #pragma warning restore 612, 618
         }

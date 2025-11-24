@@ -9,5 +9,6 @@
         public string Provincia { get; set; } = null!;
         public int CodigoPostar { get; set; }
         public string Pais { get; set; } = null!;
+        public int PersonaId { get; set; }
     }
 }
