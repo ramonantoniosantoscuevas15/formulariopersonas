@@ -11,12 +11,12 @@ namespace FormularioPersonas.Repositorios
         {
             this.context = context;
         }
-        public async Task<List<Correos>> ObtenerTodos()
+        public async Task<List<Correo>> ObtenerTodos()
         {
             return await context.Correos.ToListAsync();
         }
 
-        public async Task<int> Crear(Correos correos)
+        public async Task<int> Crear(Correo correos)
         {
             context.Add(correos);
             await context.SaveChangesAsync();
@@ -28,7 +28,7 @@ namespace FormularioPersonas.Repositorios
             return await context.Correos.AnyAsync(c => c.Id == id);
         }
 
-        public async Task Actualizar(Correos correos)
+        public async Task Actualizar(Correo correos)
         {
             context.Update(correos);
             await context.SaveChangesAsync();

@@ -5,7 +5,7 @@ using FormularioPersonas.Migrations;
 using FormularioPersonas.Repositorios;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OutputCaching;
-using Personas = FormularioPersonas.Entidades.Personas;
+using Persona = FormularioPersonas.Entidades.Persona;
 
 namespace FormularioPersonas.Endpoints
 {
@@ -50,7 +50,7 @@ namespace FormularioPersonas.Endpoints
         static async Task<Created<PersonaDTO>> AgregarPersona(CrearPersonaDTO CrearpersonaDTO, IRepositorioPersonas repositorio, 
             IOutputCacheStore outputCacheStore, IMapper mapper)
         {
-            var personas = mapper.Map<Personas>(CrearpersonaDTO);
+            var personas = mapper.Map<Persona>(CrearpersonaDTO);
             var id = await repositorio.Crear(personas);
             await outputCacheStore.EvictByTagAsync("personas-get", default);
             var personaDTO = mapper.Map<PersonaDTO>(personas);
@@ -65,7 +65,7 @@ namespace FormularioPersonas.Endpoints
             {
                 return TypedResults.NotFound();
             }
-            var personas = mapper.Map<Personas>(CrearpersonaDTO);
+            var personas = mapper.Map<Persona>(CrearpersonaDTO);
             personas.Id = id;
             await repositorio.Actualizar(personas);
             await outputCacheStore.EvictByTagAsync("personas-get", default);

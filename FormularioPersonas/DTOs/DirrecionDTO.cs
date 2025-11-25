@@ -2,6 +2,7 @@
 {
     public class DirrecionDTO
     {
+        public int Id { get; set; }
         public string Tipo { get; set; } = null!;
         public string Dirrecion { get; set; } = null!;
         public string Ciudad { get; set; } = null!;

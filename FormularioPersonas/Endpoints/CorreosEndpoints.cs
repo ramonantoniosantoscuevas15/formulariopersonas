@@ -28,7 +28,7 @@ namespace FormularioPersonas.Endpoints
         static async Task<Created<CorreoDTO>> AgregarCorreo (CrearCorreosDTO crearCorreosDTO, IMapper mapper,IRepositorioCorreos repositorio,
             IOutputCacheStore outputCacheStore)
         {
-            var correos = mapper.Map<Correos>(crearCorreosDTO);
+            var correos = mapper.Map<Correo>(crearCorreosDTO);
             var id = repositorio.Crear(correos);
             await outputCacheStore.EvictByTagAsync("correos-get", default);
             var correoDTO = mapper.Map<CorreoDTO>(correos);
@@ -43,7 +43,7 @@ namespace FormularioPersonas.Endpoints
             {
                 return TypedResults.NotFound();
             }
-            var correos = mapper.Map<Correos>(crearCorreosDTO);
+            var correos = mapper.Map<Correo>(crearCorreosDTO);
             correos.Id = id;
             await repositorio.Actualizar(correos);
             await outputCacheStore.EvictByTagAsync("correos-get", default);

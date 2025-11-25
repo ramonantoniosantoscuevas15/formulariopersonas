@@ -5,7 +5,7 @@
 namespace FormularioPersonas.Migrations
 {
     /// <inheritdoc />
-    public partial class Dirrecciones : Migration
+    public partial class Correo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

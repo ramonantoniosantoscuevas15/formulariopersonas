@@ -9,17 +9,17 @@ namespace FormularioPersonas.Utilidades
         public AutoMapperProfiles()
         {
             //mapeando las personas
-            CreateMap<CrearPersonaDTO, Personas>();
-            CreateMap<Personas, PersonaDTO>();
+            CreateMap<CrearPersonaDTO, Persona>();
+            CreateMap<Persona, PersonaDTO>();
             //mapeando las dirreciones
-            CreateMap<CrearDirrecionDTO, Dirreciones>();
-            CreateMap<Dirreciones, DirrecionDTO>();
+            CreateMap<CrearDirrecionDTO, Dirrecion>();
+            CreateMap<Dirrecion, DirrecionDTO>();
             //mapeando los telefonos
             CreateMap<CrearTelefonosDTO, Telefonos>();
             CreateMap<Telefonos,TelefonoDTO>();
             //mapeando los correos
-            CreateMap<CrearCorreosDTO, Correos>();
-            CreateMap<Correos,CorreoDTO>();
+            CreateMap<CrearCorreosDTO, Correo>();
+            CreateMap<Correo,CorreoDTO>();
             //mapeando las categorias
             CreateMap<CrearCategoriasDTO, Categoria>();
             CreateMap<Categoria,CategoriaDTO>();

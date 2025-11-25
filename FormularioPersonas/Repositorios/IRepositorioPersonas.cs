@@ -5,12 +5,12 @@ namespace FormularioPersonas.Repositorios
 {
     public interface IRepositorioPersonas
     {
-        Task<List<Personas>> ObtenerTodos(PaginacionDTO paginacionDTO);
-        Task<Personas?> ObtenerPorId(int id);
-        Task<int> Crear(Personas personas);
+        Task<List<Persona>> ObtenerTodos(PaginacionDTO paginacionDTO);
+        Task<Persona?> ObtenerPorId(int id);
+        Task<int> Crear(Persona personas);
         Task<bool>Existe(int id);
-        Task Actualizar(Personas personas);
+        Task Actualizar(Persona personas);
         Task Borrar(int id);
-        Task<List<Personas>> BusquedaPorNombre(string nombre);
+        Task<List<Persona>> BusquedaPorNombre(string nombre);
     }
 }

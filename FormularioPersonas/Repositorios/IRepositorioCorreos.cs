@@ -4,10 +4,10 @@ namespace FormularioPersonas.Repositorios
 {
     public interface IRepositorioCorreos
     {
-        Task Actualizar(Correos correos);
+        Task Actualizar(Correo correos);
         Task Borrar(int id);
-        Task<int> Crear(Correos correos);
+        Task<int> Crear(Correo correos);
         Task<bool> Existe(int id);
-        Task<List<Correos>> ObtenerTodos();
+        Task<List<Correo>> ObtenerTodos();
     }
 }

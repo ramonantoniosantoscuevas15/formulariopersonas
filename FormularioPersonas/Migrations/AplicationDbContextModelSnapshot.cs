@@ -38,7 +38,7 @@ namespace FormularioPersonas.Migrations
                     b.ToTable("Categorias");
                 });
 
-            modelBuilder.Entity("FormularioPersonas.Entidades.Correos", b =>
+            modelBuilder.Entity("FormularioPersonas.Entidades.Correo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,12 +50,17 @@ namespace FormularioPersonas.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("PersonaId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonaId");
 
                     b.ToTable("Correos");
                 });
 
-            modelBuilder.Entity("FormularioPersonas.Entidades.Dirreciones", b =>
+            modelBuilder.Entity("FormularioPersonas.Entidades.Dirrecion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +75,7 @@ namespace FormularioPersonas.Migrations
                     b.Property<int>("CodigoPostar")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Dirrecion")
+                    b.Property<string>("Dirreciones")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -79,9 +84,6 @@ namespace FormularioPersonas.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("PersonaId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("PersonasId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Provincia")
@@ -94,12 +96,12 @@ namespace FormularioPersonas.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersonasId");
+                    b.HasIndex("PersonaId");
 
-                    b.ToTable("Dirreciones");
+                    b.ToTable("Dirrecion");
                 });
 
-            modelBuilder.Entity("FormularioPersonas.Entidades.Personas", b =>
+            modelBuilder.Entity("FormularioPersonas.Entidades.Persona", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -148,16 +150,29 @@ namespace FormularioPersonas.Migrations
                     b.ToTable("Telefonos");
                 });
 
-            modelBuilder.Entity("FormularioPersonas.Entidades.Dirreciones", b =>
+            modelBuilder.Entity("FormularioPersonas.Entidades.Correo", b =>
                 {
-                    b.HasOne("FormularioPersonas.Entidades.Personas", null)
-                        .WithMany("Dirreciones")
-                        .HasForeignKey("PersonasId");
+                    b.HasOne("FormularioPersonas.Entidades.Persona", null)
+                        .WithMany("Correos")
+                        .HasForeignKey("PersonaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("FormularioPersonas.Entidades.Personas", b =>
+            modelBuilder.Entity("FormularioPersonas.Entidades.Dirrecion", b =>
                 {
-                    b.Navigation("Dirreciones");
+                    b.HasOne("FormularioPersonas.Entidades.Persona", null)
+                        .WithMany("Dirrecion")
+                        .HasForeignKey("PersonaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FormularioPersonas.Entidades.Persona", b =>
+                {
+                    b.Navigation("Correos");
+
+                    b.Navigation("Dirrecion");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,10 +1,10 @@
 ﻿namespace FormularioPersonas.Entidades
 {
-    public class Dirreciones
+    public class Dirrecion
     {
         public int Id { get; set; }
         public string Tipo { get; set; } = null!;
-        public string Dirrecion { get; set; } = null!;
+        public string Dirreciones { get; set; } = null!;
         public string Ciudad { get; set; } = null!;
         public string Provincia { get; set; } = null!;
         public int CodigoPostar { get; set; }

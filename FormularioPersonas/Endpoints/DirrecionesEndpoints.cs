@@ -42,25 +42,29 @@ namespace FormularioPersonas.Endpoints
             return TypedResults.Ok(dirrecionDTO);
 
         }
-        static async Task<Results<NoContent,NotFound>> ActualizarDirrecion(int id, CrearDirrecionDTO crearDirrecionDTO,IRepositorioDirreciones
-            repositorio,IMapper mapper,IOutputCacheStore outputCacheStore)
+        static async Task<Results<NoContent,NotFound>> ActualizarDirrecion(int personaId,int id, CrearDirrecionDTO crearDirrecionDTO,IRepositorioDirreciones
+            repositorioDirreciones,IRepositorioPersonas repositorioPersonas,IMapper mapper,IOutputCacheStore outputCacheStore)
         {
-            var existe = await repositorio.Existe(id);
-            if (!existe)
+            if (!await repositorioPersonas.Existe(personaId))
             {
                 return TypedResults.NotFound();
             }
-            var dirreciones = mapper.Map<Dirreciones>(crearDirrecionDTO);
+            if (!await repositorioDirreciones.Existe(id))
+            {
+                return TypedResults.NotFound();
+            }
+            var dirreciones = mapper.Map<Dirrecion>(crearDirrecionDTO);
             dirreciones.Id = id;
-            await repositorio.Actualizar(dirreciones);
+            dirreciones.PersonaId = personaId;
+            await repositorioDirreciones.Actualizar(dirreciones);
             await outputCacheStore.EvictByTagAsync("dirreciones-get", default);
             return TypedResults.NoContent();
         }
-        static async Task<Results<NoContent,NotFound>> BorrarDirrecion (int id, 
-            IRepositorioDirreciones repositorio,IOutputCacheStore outputCacheStore)
+        static async Task<Results<NoContent,NotFound>> BorrarDirrecion (int personaId,int id, 
+            IRepositorioDirreciones repositorio,
+            IOutputCacheStore outputCacheStore)
         {
-            var existe = await repositorio.Existe(id);
-            if (!existe)
+            if (!await repositorio.Existe(id))
             {
                 return TypedResults.NotFound();
             }
@@ -76,7 +80,7 @@ namespace FormularioPersonas.Endpoints
             {
                 return TypedResults.NotFound();
             }
-           var dirrecion = mapper.Map<Dirreciones>(crearDirrecionDTO);
+           var dirrecion = mapper.Map<Dirrecion>(crearDirrecionDTO);
             dirrecion.PersonaId = personaId;
             var id = await repositorioDirreciones.Crear(dirrecion);
             await outputCacheStore.EvictByTagAsync("dirreciones-get", default);

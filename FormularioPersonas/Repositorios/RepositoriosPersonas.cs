@@ -20,12 +20,12 @@ namespace FormularioPersonas.Repositorios
             return await context.Personas.AnyAsync(p => p.Id == id);
         }
 
-        public async Task<Personas?> ObtenerPorId(int id)
+        public async Task<Persona?> ObtenerPorId(int id)
         {
-            return await context.Personas.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            return await context.Personas.Include(p=> p.Dirrecion).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<List<Personas>> ObtenerTodos(PaginacionDTO paginacionDTO)
+        public async Task<List<Persona>> ObtenerTodos(PaginacionDTO paginacionDTO)
         {
             //orden de los nombres por apellido de forma decendente
             //return await context.Personas.OrderBy(p => p.Apellido).ToListAsync();
@@ -34,13 +34,13 @@ namespace FormularioPersonas.Repositorios
             return await queryable.OrderByDescending(p => p.Apellido).Paginar(paginacionDTO).ToListAsync();
         }
 
-        public async Task<int> Crear(Personas personas)
+        public async Task<int> Crear(Persona personas)
         {
             context.Add(personas);
             await context.SaveChangesAsync();
             return personas.Id;
         }
-        public async Task Actualizar(Personas personas)
+        public async Task Actualizar(Persona personas)
         {
             context.Update(personas);
             await context.SaveChangesAsync();
@@ -52,7 +52,7 @@ namespace FormularioPersonas.Repositorios
             await context.Personas.Where(p => p.Id == id).ExecuteDeleteAsync();
         }
 
-        public async Task<List<Personas>> BusquedaPorNombre(string nombre)
+        public async Task<List<Persona>> BusquedaPorNombre(string nombre)
         {
             return await context.Personas.Where(p => p.Nombre.Contains(nombre)).
                 OrderBy(p => p.Nombre).ToListAsync();
